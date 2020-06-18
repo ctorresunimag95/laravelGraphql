@@ -2,7 +2,7 @@
 
 namespace App\GraphQL\Queries;
 
-use App\Models\User;
+use App\Models\Article;
 
 use Closure;
 use Rebing\GraphQL\Support\Facades\GraphQL;
@@ -10,16 +10,16 @@ use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 
-class UsersQuery extends Query
+class ArticleQuery extends Query
 {
     protected $attributes = [
-        'name' => 'users',
-        'description' => 'A query of users'
+        'name' => 'articles',
+        'description' => 'A query of articles'
     ];
 
     public function type(): Type
     {
-        return Type::listOf(GraphQL::type('User'));
+        return Type::listOf(GraphQL::type('Article'));
     }
 
     public function args(): array
@@ -29,12 +29,8 @@ class UsersQuery extends Query
                 'name' => 'id',
                 'type' => Type::int()
             ],
-            'email' => [
-                'name' => 'email',
-                'type' => Type::string()
-            ],
-            'name' => [
-                'name' => 'name',
+            'title' => [
+                'name' => 'title',
                 'type' => Type::string()
             ]
         ];
@@ -48,16 +44,16 @@ class UsersQuery extends Query
                 $query->where('id', $args['id']);
             }
 
-            if (isset($args['email'])) {
-                $query->where('email', $args['email']);
+            if (isset($args['title'])) {
+                $query->where('title', $args['title']);
             }
         };
 
-        $users = User::with(array_keys($fields->getRelations()))
+        $articles = Article::with(array_keys($fields->getRelations()))
             ->where($where)
             ->select($fields->getSelect())
             ->get();
 
-        return $users;
+        return $articles;
     }
 }
