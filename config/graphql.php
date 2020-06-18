@@ -45,7 +45,9 @@ return [
     'controllers' => \Rebing\GraphQL\GraphQLController::class . '@query',
 
     // Any middleware for the graphql route group
-    'middleware' => [],
+    'middleware' => [
+        'cors'
+    ],
 
     // Additional route group attributes
     //
@@ -104,9 +106,15 @@ return [
                 'wine' => App\GraphQL\Queries\WineQuery::class,
                 'wines' => App\GraphQL\Queries\WinesQuery::class,
                 'users' => App\GraphQL\Queries\UsersQuery::class,
+                'articles' => App\GraphQL\Queries\ArticleQuery::class
             ],
             'mutation' => [
-                // 'example_mutation'  => ExampleMutation::class,
+                'createUser' => App\GraphQL\Mutations\User\CreateUserMutation::class,
+                'updateUser' => App\GraphQL\Mutations\User\UpdateUserMutation::class,
+                'deleteUser' => App\GraphQL\Mutations\User\DeleteUserMutation::class,
+                'createArticle' => App\GraphQL\Mutations\Article\CreateArticleMutation::class,
+                'updateArticle' => App\GraphQL\Mutations\Article\UpdateArticleMutation::class,
+                'deleteArticle' => App\GraphQL\Mutations\Article\DeleteArticleMutation::class,
             ],
             'middleware' => [
                 //'checkAccess'

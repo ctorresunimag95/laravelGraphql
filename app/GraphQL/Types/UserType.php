@@ -45,10 +45,7 @@ class UserType extends GraphQLType
                         }
                     };
 
-                    return $root
-                        ->articles()
-                        ->where($where)
-                        ->get();
+                    return $root->articles()->where($where)->get();
                 }
             ],
         ];
